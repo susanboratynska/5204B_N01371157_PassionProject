@@ -62,31 +62,6 @@ namespace PassionProject_SusanBoratynska.Controllers
             return View(viewmodel);
         }
 
-        //[HttpPost]
-        //public ActionResult AttachPosition(int id, int positionID)
-        //{
-        //    Debug.WriteLine("Player ID is " + id + " and the Position ID is " + positionID);
-
-        //    string check_query = "SELECT * FROM Positions INNER JOIN PositionPlayers on PositionPlayers.Position_positionID = Positions.positionID WHERE Position_positionID=@positionID and Player_playerID=@id";
-        //    SqlParameter[] check_params = new SqlParameter[2];
-        //    check_params[0] = new SqlParameter("@id", id);
-        //    check_params[1] = new SqlParameter("@positionID", positionID);
-        //    List<Position> positions = db.Positions.SqlQuery(check_query, check_params).ToList();
-            
-        //    // Execute only if that player doesn't already play that position:
-        //    if (positions.Count <= 0)
-        //    {
-        //        string query = "INSERT INTO PositionPlayers (Position_PositionID, Player_PlayerID) VALUES (@positionID, @id)";
-        //        SqlParameter[] sqlparams = new SqlParameter[2];
-        //        sqlparams[0] = new SqlParameter("@id", id);
-        //        sqlparams[1] = new SqlParameter("@positionID", positionID);
-
-        //        db.Database.ExecuteSqlCommand(query, sqlparams);
-        //    }
-        //    return RedirectToAction("Show/" + id);
-        //}
-
-
 
         public ActionResult Add()
         {
@@ -112,28 +87,23 @@ namespace PassionProject_SusanBoratynska.Controllers
         public ActionResult Add(string firstname, string lastname, int teamID, HttpPostedFileBase ProfilePic, List<int> positionArray)
         {
 
-            //STEP 1: PULL DATA! The data is access as arguments to the method. Make sure the datatype is correct!
-            //The variable name  MUST match the name attribute described in Views/Pet/Add.cshtml in the view
+            // Retrieve data from form fields. The variable name MUST match the name attribute described in Views/Player/Add.cshtml in the view
+            Debug.WriteLine("Create a Player named " + firstname + " " + lastname + ".");
 
-            //Tests are very useul to determining if you are pulling data correctly!
-            //Debug.WriteLine("Want to create a pet with name " + PetName + " and weight " + PetWeight.ToString()) ;
-
-            //STEP 2: FORMAT QUERY! the query will look something like "insert into () values ()"...
+            // Query statment to insert values in Players table
             string query = "INSERT INTO players (firstname, lastname, teamID) VALUES (@FirstName, @LastName, @teamID)"; 
-            SqlParameter[] sqlparams = new SqlParameter[3]; //0,1,2,3,4 pieces of information to add // CREATE AN ARRAY, EACH OF THE ITEMS IS GOING TO CORRESPOND TO THE COLUMNS
-            //each piece of information is a key and value pair
-            sqlparams[0] = new SqlParameter("@FirstName", firstname); //MATCHES LINES 78
+            SqlParameter[] sqlparams = new SqlParameter[3]; // Create an array for each of the items teh correspond to a column
+            // Each piece of information is a key and value pair
+            sqlparams[0] = new SqlParameter("@FirstName", firstname); 
             sqlparams[1] = new SqlParameter("@LastName", lastname);
             sqlparams[2] = new SqlParameter("@teamID", teamID);
 
             //db.Database.ExecuteSqlCommand will run insert, update, delete statements
-            //db.Pets.SqlCommand will run a select statement, for example.
-            //------
-            //db.Database.ExecuteSqlCommand(query, sqlparams); // TAKES IN 1 ARGRUMENTS, ONE OF THEM IS THE QUERY (LINE 81), THE SECOND IS THE SQL PARAMS (AN ARRAY OF SQL PARAMS)
+            //db.Player.SqlCommand will run a select statement, for example.
 
-            // If the above line inserts into the database then we have a PlayerID because db.Database.ExecuteSqlCommand() returns an Int32
-            // Therefore, we can add the positions to the PositionPlayer bridging table:
             int numRowAffected = db.Database.ExecuteSqlCommand(query, sqlparams);
+            // If the above line inserts into the database then we have a PlayerID db.Database.ExecuteSqlCommand() will return '1'
+            // Therefore, we can add the positions to the PositionPlayer bridging table and also file a Profile Pic for the user using the playerID
             if (numRowAffected == 1)
             {
             
@@ -205,13 +175,11 @@ namespace PassionProject_SusanBoratynska.Controllers
 
                     db.Database.ExecuteSqlCommand(profile_query, parameters);
 
-
                 }
 
-
             }
-
-            return RedirectToAction("List"); //GO TO THE LIST OF PETS SO I CAN SEE THE PET I JUST ADDED, IT WILL GO THE FUNCTION CALL LIST ON LINE 46
+            // If successful, go to Player/List
+            return RedirectToAction("List"); 
         }
 
         public ActionResult Update(int id)
@@ -248,7 +216,6 @@ namespace PassionProject_SusanBoratynska.Controllers
                 if (ProfilePic.ContentLength > 0)
                 {
                     Debug.WriteLine("Identified image");
-                    // File extension: https://www.c-sharpcorner.com/article/file-upload-extension-validation-in-asp-net-mvc-and-javascript/
                     var filetypes = new[] { "jpeg", "jpg", "png" };
                     var extension = Path.GetExtension(ProfilePic.FileName).Substring(1);
 
@@ -259,7 +226,7 @@ namespace PassionProject_SusanBoratynska.Controllers
                             // Make the file name the id of the image
                             string filename = id + "." + extension;
 
-                            // Create a direct file path to ~/Content/Pets/{id}.{extension}
+                            // Create a direct file path to ~/Content/ProfilePics/{id}.{extension}
                             string path = Path.Combine(Server.MapPath("~/Content/ProfilePics/"), filename);
 
                             // Save file
@@ -275,17 +242,15 @@ namespace PassionProject_SusanBoratynska.Controllers
                             Debug.WriteLine("Exception: " + ex);
                         }
                     }
-                }
-
-                
+                } 
             }
 
+            // Retrieve all the positions that the Player plays from the PositionPlayer bridging table
             string check_query = "SELECT * FROM PositionPlayers INNER JOIN Positions on PositionPlayers.Position_positionID = Positions.positionID WHERE Player_playerID=@id";
             SqlParameter[] check_params = new SqlParameter[1];
             check_params[0] = new SqlParameter("@id", id);
             List<Position> positions = db.Positions.SqlQuery(check_query, check_params).ToList();
 
-            
             // Execute only if that player doesn't already play that position:
             if (positions.Count <= 0)
             {
@@ -299,9 +264,9 @@ namespace PassionProject_SusanBoratynska.Controllers
                 }
             }
 
-            // STEP 1: PULL DATA:
             Debug.WriteLine("Retrieving data of "+ FirstName + " " + LastName);
 
+            // Update Player data:
             string query = "UPDATE players SET firstname=@FirstName, lastname=@LastName, teamID=@teamID, hasPic=@hasPic, picExtension=@picExtension WHERE playerID=@id";
             SqlParameter[] parameters = new SqlParameter[6]; 
 

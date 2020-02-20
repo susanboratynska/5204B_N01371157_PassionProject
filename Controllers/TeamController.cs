@@ -23,6 +23,7 @@ namespace PassionProject_SusanBoratynska.Controllers
             return View();
         }
 
+        // List all Teams
         public ActionResult List(string searchkey, string men, string women, string all)
         {
             Debug.WriteLine("Search Key: " + searchkey);
@@ -34,8 +35,8 @@ namespace PassionProject_SusanBoratynska.Controllers
                 // Search by name
                 myteam = db.Teams.SqlQuery("SELECT * FROM Teams WHERE name LIKE '%" + searchkey + "%' OR city LIKE '%" + searchkey + "%' OR state LIKE '$" + searchkey +"%' ORDER BY name;").ToList();
                 Debug.WriteLine("myteam: " + myteam);
-            }
-
+            
+            // Checbox Filter by Divisions (men's, women's, all)"
             if ( men == "Men")
             {
                 myteam = db.Teams.SqlQuery("SELECT * FROM Teams WHERE division LIKE '" + men + "%' ORDER BY name;").ToList();
@@ -62,6 +63,8 @@ namespace PassionProject_SusanBoratynska.Controllers
             return View();
         }
 
+
+        // Add New Team:
         [HttpPost]
         public ActionResult Add(string TeamName, string TeamCity, string TeamState, string TeamDivision)
         {
@@ -77,17 +80,10 @@ namespace PassionProject_SusanBoratynska.Controllers
             return RedirectToAction("List");
         }
 
+        //Show one Team
+
         public ActionResult Show(int id)
         {
-            //// Retrieve data from a specific Team:
-            //string query = "SELECT * FROM teams WHERE teamID = @id";
-            //var parameter = new SqlParameter("@id", id);
-            //Team team = db.Teams.SqlQuery(query, parameter).FirstOrDefault();
-
-            //Debug.WriteLine("Query: " + query);
-
-            //return View(team);
-
             // Retrieve data from a specific Team:
             string team_query = "SELECT * FROM teams WHERE teamID = @id";
             var parameter = new SqlParameter("@id", id);
@@ -119,6 +115,8 @@ namespace PassionProject_SusanBoratynska.Controllers
 
             return View(selectedteam);
         }
+
+        // Update a Team:
         [HttpPost]
         public ActionResult Update(int id, string TeamName, string TeamCity, string TeamState, string TeamDivision)
         {
@@ -150,7 +148,7 @@ namespace PassionProject_SusanBoratynska.Controllers
             db.Database.ExecuteSqlCommand(query, param);
 
 
-            //for the sake of referential integrity, unset the species for all pets
+            // Referential integrity; remove all instances of that team in Players Table
             string refquery = "UPDATE players SET teamID = '' WHERE teamID=@id";
             db.Database.ExecuteSqlCommand(refquery, param); //same param as before
 

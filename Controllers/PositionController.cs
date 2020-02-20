@@ -24,6 +24,7 @@ namespace PassionProject_SusanBoratynska.Controllers
             return View();
         }
 
+        // List all Positions
         public ActionResult List(string searchkey)
         {
             Debug.WriteLine("Query: " + searchkey);
@@ -43,6 +44,7 @@ namespace PassionProject_SusanBoratynska.Controllers
             return View();
         }
 
+        // Add new Positions
         [HttpPost]
         public ActionResult Add(string PositionName)
         {
@@ -54,6 +56,7 @@ namespace PassionProject_SusanBoratynska.Controllers
             return RedirectToAction("List");
         }
 
+        // Show single Position:
         public ActionResult Show(int id)
         {
             string query = "SELECT * FROM positions WHERE positionID = @id";
@@ -76,6 +79,7 @@ namespace PassionProject_SusanBoratynska.Controllers
             return View(selectedposition);
         }
 
+        // Update existing Position
         [HttpPost]
         public ActionResult Update(int id, string PositionName)
         {
