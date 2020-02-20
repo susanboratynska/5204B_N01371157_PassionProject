@@ -33,11 +33,12 @@ namespace PassionProject_SusanBoratynska.Controllers
             if (searchkey != "")
             {
                 // Search by name
-                myteam = db.Teams.SqlQuery("SELECT * FROM Teams WHERE name LIKE '%" + searchkey + "%' OR city LIKE '%" + searchkey + "%' OR state LIKE '$" + searchkey +"%' ORDER BY name;").ToList();
+                myteam = db.Teams.SqlQuery("SELECT * FROM Teams WHERE name LIKE '%" + searchkey + "%' OR city LIKE '%" + searchkey + "%' OR state LIKE '$" + searchkey + "%' ORDER BY name;").ToList();
                 Debug.WriteLine("myteam: " + myteam);
-            
-            // Checbox Filter by Divisions (men's, women's, all)"
-            if ( men == "Men")
+            }
+
+            // Filter results by Division (men's, women's, all)
+            if (men == "Men")
             {
                 myteam = db.Teams.SqlQuery("SELECT * FROM Teams WHERE division LIKE '" + men + "%' ORDER BY name;").ToList();
                 Debug.WriteLine("myteam: " + myteam);
@@ -57,6 +58,8 @@ namespace PassionProject_SusanBoratynska.Controllers
 
             return View(myteam);
         }
+
+
 
         public ActionResult Add()
         {
