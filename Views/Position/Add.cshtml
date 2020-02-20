@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add New Position</h2>
+
+<div class="float-top-right">
+    <a href="/Position/List" class="navlink btn btn-default">Back to List</a>
+</div>
+
+<form method="POST" action="/Position/Add">
+    <div class="inpfield"><span class="show-label">Name:</span><input type="text" class="form-control" id="PositionName" name="PositionName" /></div>
+    <div class="inpfield"><input type="submit" value="Add New Position" class="btn btn-default add-btn"/></div>
+</form>

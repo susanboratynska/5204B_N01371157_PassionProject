@@ -1,0 +1,22 @@
+﻿@model PassionProject_SusanBoratynska.Models.Team
+
+@{
+    ViewBag.Title = "Update";
+}
+
+<h2>Update Team</h2>
+
+
+<div class="navbar">
+    <a href="/Team/List" class="btn btn-default" role="button">Back to List</a>
+</div>
+
+<form method="POST" action="/Team/Update/@Model.teamID">
+    <div class="inpfield"><span class="show-label">Team Name:</span><input type="text" class="form-control" id="TeamName" name="TeamName" value="@Model.name" /></div>
+    <div class="inpfield"><span class="show-label">City:</span><input type="text" class="form-control" name="TeamCity" id="TeamCity" value="@Model.city" /></div>
+    <div class="inpfield"><span class="show-label">State/Province:</span><input type="text" class="form-control" name="TeamState" id="TeamState" value="@Model.state" /></div>
+    <div class="inpfield"><span class="show-label">Division:</span><input type="text" class="form-control" name="TeamDivision" id="TeamDivision" value="@Model.division" /></div>
+    <input type="submit" value="Update Team" class="btn btn-default" />
+</form>
+
+

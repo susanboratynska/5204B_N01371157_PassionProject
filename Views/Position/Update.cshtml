@@ -1,0 +1,19 @@
+﻿@model PassionProject_SusanBoratynska.Models.Position
+
+@{
+    ViewBag.Title = "Update";
+}
+
+<h2>Update @Model.position</h2>
+
+<div class="navbar">
+    <a href="/Position/List" class="btn btn-default">Back to List</a>
+</div>
+
+<form method="post" action="/Position/Update/@Model.positionID">
+    <span class="show-label">Name:</span><input type="text" class="form-control" id="PositionName" name="PositionName" value="@Model.position" />
+    <input type="submit" value="Update Position" class="btn btn-default" />
+</form>
+
+
+

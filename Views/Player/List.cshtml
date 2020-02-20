@@ -1,0 +1,55 @@
+﻿@model List<PassionProject_SusanBoratynska.Models.Player>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List of Players</h2>
+
+<div class="navbar">
+    <a href="/Player/Add" class="btn btn-default">Add New Player</a>
+</div>
+
+<form action="/Player/List" method="GET" class="float-top-right">
+    <input type="text" name="searchkey" id="searchkey" placeholder="Enter Player Name" class="btn btn-default search-input" />
+    <input type="submit" value="Search" class="btn btn-default" />
+</form>
+
+<table class="table" style="width:100%">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Player Name</th>
+            <th scope="col">Team</th>
+            <th scope="col">Position(s)</th>
+        </tr>
+    </thead>
+    @{
+        foreach (var Player in Model)
+        {
+            <tr>
+                <td><a href="/Player/Show/@Player.playerID" class="show-label">@Player.firstname @Player.lastname</a></td>
+                <td><a href="/Team/Show/@Player.teamID">@Player.team.name</a></td>
+                <td>
+                    @{ // Add comma in between each position except for the last:
+                        int positionCount = Player.Positions.Count();
+                        int positionIndex = 0;
+                        foreach (var position in @Player.Positions)
+                        {
+                            
+                            if (positionIndex < (positionCount - 1))
+                            {
+                                @position.position<text>, </text> ;
+                            } else
+                            {
+                                @position.position;
+                            }
+                            positionIndex++;
+
+                        }
+                    }
+
+                </td>
+            </tr>
+        }
+    }
+</table>

@@ -1,0 +1,58 @@
+﻿@model PassionProject_SusanBoratynska.Models.ViewModels.ShowPlayer
+
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>@Model.Player.firstname @Model.Player.lastname</h2>
+
+<div class="float-top-right">
+    <a href="/Player/List" class="btn btn-default">Back to List</a>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <!--<span class="show-label">Name: </span>@Model.Player.firstname @Model.Player.lastname-->
+            @{
+                if (Model.Player.hasPic == 1)
+                {
+                    <img src="../../Content/ProfilePics/@(Model.Player.playerID).@(Model.Player.picExtension)" alt="Image of @Model.Player.firstname @Model.Player.lastname" />
+                }
+            }
+        </div>
+
+        <div class="col-md-4">
+            <div>
+                <div>
+                    <span class="show-label">Team: </span>
+                    @{
+                        <a href="/Team/Show/@Model.Player.teamID">@Model.Player.team.name</a><br />
+                    }
+                </div>
+                <span class="show-label">Position(s): </span>
+                @{
+                    foreach (var position in @Model.Positions)
+                    {
+                        <a href="/Position/Show/@position.positionID">@position.position</a>
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="navbar add-btn">
+    <a href="/Player/Update/@Model.Player.playerID" class="btn btn-default">Update</a>
+    @Html.ActionLink("Delete Player", "DeleteConfirm", new { id = @Model.Player.playerID }, new { onclick = "return confirm('Confirm delete?');", @class = "btn btn-default" })
+    <!--
+        PURPOSE: ActionLink to create a confirmation pop-up before deleting data
+        SRC: https://stackoverflow.com/questions/14152575/pass-parameter-to-controller-from-html-actionlink-mvc-4
+
+        PURPOSE: Add class to ActionLink
+        SRC: https://stackoverflow.com/questions/18643457/how-do-i-add-a-class-to-an-html-actionlink/18643539
+     -->
+</div>
+
+

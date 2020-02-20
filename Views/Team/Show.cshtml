@@ -1,0 +1,60 @@
+﻿@model PassionProject_SusanBoratynska.Models.ViewModels.ShowTeam
+
+@{
+    ViewBag.Title = "Show";
+    int counter = 0;
+}
+
+<h2>@Model.Team.name</h2>
+
+<div class="float-top-right">
+    <a href="/Team/List" class="btn btn-default">List of Teams</a>
+</div>
+<br />
+
+<span class="show-label">Location:</span>@Model.Team.city, @Model.Team.state
+<br />
+<span class="show-label">Division:</span>@Model.Team.division
+
+<div class="row">
+    @{
+        foreach (var Player in Model.Players)
+        {
+            if (counter != 0 && counter % 4 == 0)
+            {
+            @:</div>
+            @:<div class="row">
+            }
+            <div class="col-md-3">
+                <div class="thumbnail">
+                    @{
+                        if (Player.hasPic == 1)
+                        {
+                            <img src="../../Content/ProfilePics/@(Player.playerID).@(Player.picExtension)" alt="Image of @Player.firstname @Player.lastname" class="profilePicture" />
+                        }
+                    }
+                    <div class="caption">
+                        <a href="/Player/Show/@Player.playerID" class="show-label">@Player.firstname @Player.lastname</a>
+                    </div>
+                </div>
+            </div>
+        }
+        counter++;
+        // PURPOSE: Rendering a list using the Bootstrap grid system.
+        // SRC:https://www.jerriepelser.com/blog/approaches-when-rendering-list-using-bootstrap-grid-system/
+
+    }
+</div>
+
+<div class="navbar">
+    <a href="/Team/Update/@Model.Team.teamID" class="btn btn-default">Update</a>
+    @Html.ActionLink("Delete Team", "DeleteConfirm", new { id = @Model.Team.teamID }, new { onclick = "return confirm('Confirm delete?');", @class = "btn btn-default" })
+    <!--
+        PURPOSE: ActionLink to create a confirmation pop-up before deleting data
+        SRC: https://stackoverflow.com/questions/14152575/pass-parameter-to-controller-from-html-actionlink-mvc-4
+
+        PURPOSE: Add class to ActionLink
+        SRC: https://stackoverflow.com/questions/18643457/how-do-i-add-a-class-to-an-html-actionlink/18643539
+     -->
+</div>
+<br />

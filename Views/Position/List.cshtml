@@ -1,0 +1,29 @@
+﻿@model List<PassionProject_SusanBoratynska.Models.Position>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List of Positions</h2>
+
+<div class="navbar">
+    <a href="/Position/Add" class="btn btn-default" role="button">Add New Position</a>
+</div>
+
+<form action="/Position/List" method="GET" class="float-top-right">
+    <input type="text" name="searchkey" id="searchkey" placeholder="Enter Position Name" class="btn btn-default search-input" />
+    <input type="submit" value="Search" class="btn btn-default" />
+</form>
+
+<ul class="list-group">
+    @{
+        foreach (var position in @Model)
+        {
+
+            <li class="list-group-item">
+                <a href="/Position/Show/@position.positionID">@position.position</a>
+            </li>
+        }
+    }
+</ul>
+

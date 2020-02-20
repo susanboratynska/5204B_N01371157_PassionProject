@@ -1,0 +1,60 @@
+﻿
+
+.show-label{
+    font-weight: bold;
+}
+
+.caption {
+    background: lightgray;
+    text-align: center;
+}
+
+.profilePicture {
+   height: auto;
+   width: 100%; 
+   max-width: 400px;
+   display: block;
+}
+
+.float-top-right {
+    float: right;
+}
+
+.search-input{
+    background: lightgray; 
+}
+
+.navbar {
+    display: inline-block;  
+}
+
+.unbold {
+    font-weight: normal;
+}
+
+.add-btn {
+        margin-top: 10px;
+}
+
+#banner {
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    object-fit: cover;
+    width: 1000px;
+    height: 585px;
+}
+
+.inblock-display {
+    display: inline-block
+}
+
+#checkbox-filter {
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+    margin-left: 2px;
+}

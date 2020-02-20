@@ -1,0 +1,56 @@
+﻿@model PassionProject_SusanBoratynska.Models.ViewModels.UpdatePlayer
+
+@{
+    ViewBag.Title = "Update";
+}
+
+<h2>Update @Model.Player.firstname @Model.Player.lastname</h2>
+
+<div class="navbar">
+    <a href="/Player/List" class="btn btn-default">Back to List</a>
+</div>
+
+<form method="post" action="/Player/Update/@Model.Player.playerID" enctype="multipart/form-data">
+    <label for="FirstName" class="show-label">First Name:</label>
+    <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.Player.firstname" /><br />
+    <label for="LastName" class="show-label">Last Name:</label>
+    <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.Player.lastname" />
+    <div class="inpfield"><span class="show-label">Image: </span><input type="file" name="ProfilePic" id="ProfilePic" class="btn btn-default"/></div>
+    <div class="inpfield">
+        <span class="show-label">Team:</span>
+
+        <select id="PlayerTeamID" name="teamID" class="form-control">
+            @{ 
+                foreach (var team in Model.Teams)
+                {
+                    var selected = "";
+                    if (Model.Player.teamID == team.teamID)
+                    {
+                        selected = "selected";
+                    }
+                    <option value="@team.teamID" @selected>@team.name</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="inpfield">
+        <span class="show-label">Position(s):</span>
+        @{
+            foreach (var position in @Model.Positions)
+            {
+                var ischecked = "";
+                foreach (var playerposition in @Model.Player.Positions)
+                {
+                    if (playerposition.positionID == position.positionID)
+                    {
+                        ischecked = "checked";
+                    }
+                }
+                <input type="checkbox" name="PositionArray" value="@position.positionID" @ischecked />
+                <label name="PositionArray">@position.position</label>
+            }
+        }
+    </div>
+    <input type="submit" value="Update Player" class="btn btn-default" />
+</form>
+

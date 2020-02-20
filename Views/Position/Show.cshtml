@@ -1,0 +1,24 @@
+﻿@model PassionProject_SusanBoratynska.Models.Position
+
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>@Model.position</h2>
+
+
+<div class="navbar">
+    <a href="/Position/List" class="btn btn-default">Back to List</a>
+    <a href="/Position/Update/@Model.positionID" class="btn btn-default">Update</a>
+    @Html.ActionLink("Delete Position", "Delete", new { id = @Model.positionID }, new { onclick = "return confirm('Confirm delete?');", @class = "btn btn-default" })
+    <!--
+        PURPOSE: ActionLink to create a confirmation pop-up before deleting data
+        SRC: https://stackoverflow.com/questions/14152575/pass-parameter-to-controller-from-html-actionlink-mvc-4
+
+        PURPOSE: Add class to ActionLink
+        SRC: https://stackoverflow.com/questions/18643457/how-do-i-add-a-class-to-an-html-actionlink/18643539
+     -->
+</div>
+<div>
+    <span class="show-label">Position: </span>@Model.position
+</div>

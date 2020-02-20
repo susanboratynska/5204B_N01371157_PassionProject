@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add New Team</h2>
+
+
+<div class="navbar float-top-right">
+    <a href="/Team/List" class="btn btn-default">Back to List</a>
+</div>
+
+<form method="POST" action="/Team/Add">
+    <div class="inpfield"><span class="show-label">Team Name:</span><input type="text" class="form-control" id="TeamName" name="TeamName" /></div>
+    <div class="inpfield"><span class="show-label">City:</span><input type="text" class="form-control" name="TeamCity" id="TeamCity" /></div>
+    <div class="inpfield"><span class="show-label">State/Province:</span><input type="text" class="form-control" name="TeamState" id="TeamState" /></div>
+    <div class="inpfield"><span class="show-label">Division:</span><input type="text" class="form-control" name="TeamDivision" id="TeamDivision" /></div>
+    <input type="submit" value="Add New Team" class="btn btn-default add-btn" />
+</form>
+
+
