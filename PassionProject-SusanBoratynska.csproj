@@ -172,6 +172,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\WebsitePics\NACIVT2020.jpg" />
+    <Content Include="ERD\ERD-PassionProject-SusanBoratynska.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -218,6 +219,7 @@
     <Content Include="Views\Player\DeleteConfirm.cshtml" />
     <Content Include="Views\Team\DeleteConfirm.cshtml" />
     <None Include="Views\Team\List.cshtml" />
+    <Content Include="Wireframe\Wireframes-PassionProject.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ProfilePics\" />
